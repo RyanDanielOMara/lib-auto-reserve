@@ -1,0 +1,1 @@
+0 0 * * * bash -c 'cd /Home/ && sh lib.sh'
