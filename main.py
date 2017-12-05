@@ -5,35 +5,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
+from timer import newDay
+from inputparse import getInput
+
 import datetime
 import time
 
 reserve_date = (datetime.date.today() + datetime.timedelta(days=3))
 reserve_day  = int(reserve_date.strftime('%d'))
-room_number  = "14"
-people = [
-	["10:00am", "11:00am", "12:00pm", "Ali",      "Ahmed",     "atahmed@buffalo.edu"],
-	["12:00pm", "1:00pm",  "2:00pm",  "Barry",    "Lee",       "bclee@buffalo.edu"],
-	["2:00pm",  "3:00pm",  "4:00pm",  "Brian",    "De Guzman", "bsdeguzm@buffalo.edu"],
-	["4:00pm",  "5:00pm",  "6:00pm",  "Joseph",   "Lebold",    "jlebold@buffalo.edu"],
-	["6:00pm",  "7:00pm",  "8:00pm",  "Ryan",     "O'Mara",    "rdomara@buffalo.edu"],
-	["8:00pm",  "9:00pm",  "10:00pm", "Tyler",    "Lynch",     "tjlynch@buffalo.edu"],
-	["10:00pm", "11:00pm", "11:59pm", "Valencia", "Kaplinsky", "vakaplin@buffalo.edu"],
-]
 
-# PEOPLE FOR DEMO
-people = [
-	["12:00am", "1:00am",  "2:00am",  "Barry",    "Lee",       "bclee@buffalo.edu"],
-	["2:00am",  "3:00am",  "4:00am",  "Brian",    "De Guzman", "bsdeguzm@buffalo.edu"],
-	["4:00am",  "5:00am",  "6:00am",  "Joseph",   "Lebold",    "jlebold@buffalo.edu"],
-	["6:00am",  "7:00am",  "8:00am",  "Ryan",     "O'Mara",    "rdomara@buffalo.edu"],
-	["8:00am",  "9:00am",  "10:00am", "Tyler",    "Lynch",     "tjlynch@buffalo.edu"],
-	["10:00am", "11:00am", "12:00pm", "Valencia", "Kaplinsky", "vakaplin@buffalo.edu"],
-]
-
+lib_entries = getInput("DATABASE.csv")
+room_number = str(lib_entries[0])
+people = lib_entries[1]
 
 def main():
 	print(reserve_date.strftime('Making reservations for %m/%d/%y...'))
+	
 
 	options = webdriver.ChromeOptions()
 	options.add_argument("--start-maximized")
@@ -51,7 +38,7 @@ def main():
 		time.sleep(2.5)
 		
 		reserveRoom(driver, person)
-		time.sleep(1.5)
+		time.sleep(2.5)
 
 def selectDay(driver):
 	if 1 <= reserve_day <= 3:
@@ -100,6 +87,6 @@ def reserveRoom(driver, person):
 	active_elem.click()
 
 if __name__ == "__main__":
-    main()
-    print("Finished reservations.")
-    time.sleep(3)
+	main()
+	print("Finished reservations.")
+	time.sleep(3)
